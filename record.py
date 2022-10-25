@@ -8,7 +8,6 @@ def RecordStart(filename, record_secs = 1200):
   chans = 1 # 1 channel
   samp_rate = 44100 # 44.1kHz sampling rate
   chunk = 4096 # 2^12 samples for buffer
-  #record_secs = 1200 # seconds to record
   dev_index = 1 # device index found by p.get_device_info_by_index(ii)
   wav_output_filename = filename #str(today)+'.wav' # name of .wav file
   p = pyaudio.PyAudio()
@@ -16,12 +15,14 @@ def RecordStart(filename, record_secs = 1200):
   numdevices = info.get('deviceCount')
 
 
+  '''
   for dev in range(p.get_device_count()):
     print(p.get_device_info_by_index(dev).get('name'))  
 
-#for i in range(0, numdevices):
-#    if (p.get_device_info_by_host_api_device_index(0, i).get('maxInputChannels')) > 0:
-#        print("Input Device id ", i, " - ", p.get_device_info_by_host_api_device_index(0, i).get('name'))
+  for i in range(0, numdevices):
+    if (p.get_device_info_by_host_api_device_index(0, i).get('maxInputChannels')) > 0:
+      print("Input Device id ", i, " - ", p.get_device_info_by_host_api_device_index(0, i).get('name'))
+  '''
 
 
   audio = pyaudio.PyAudio() # create pyaudio instantiation
@@ -57,16 +58,16 @@ def RecordStart(filename, record_secs = 1200):
 from threading import Timer
 import time
 OVER_LAP_SEC = 5
-TOTAL_RECORD_SEC = 80
-RECORD_SEC = 20
+TOTAL_RECORD_SEC = 1200
+RECORD_SEC = 50
 today = datetime.today().strftime('%Y%m%d')
-#file_name = str(today) + ".wav"
-file_name = "recordtest"
+file_name = str(today) + ".wav"
+
+
 record_cnt = int(TOTAL_RECORD_SEC / RECORD_SEC)
 for i in range (record_cnt):
   file_name_buff = file_name + "-" + str(i) +".wav"
   RecordStart(file_name_buff, RECORD_SEC)
-
 
 
 '''
