@@ -53,9 +53,54 @@ def RecordStart(filename, record_secs = 1200):
   wavefile.writeframes(b''.join(frames))
   wavefile.close()
 
+
+from threading import Timer
+import time
+OVER_LAP_SEC = 5
+TOTAL_RECORD_SEC = 80
+RECORD_SEC = 30
 today = datetime.today().strftime('%Y%m%d')
-file_name = str(today) + ".wav"
-RecordStart(file_name,1200)
+#file_name = str(today) + ".wav"
+file_name = "recordtest"
+RecordStart(file_name, RECORD_SEC)
+record_cnt = int(TOTAL_RECORD_SEC / RECORD_SEC)
+#for i in range (record_cnt):
+#  file_name_buff = file_name + "-" + str(i) +".wav"
+#  RecordStart(file_name_buff, RECORD_SEC)
+
+
+
+'''
+recorded_secs = 0
+def getExeSec(start_time):
+  recorded_secs = (datetime.now() - start_time).seconds
+  print("EXE Time = "+str(recorded_secs) +" Sec")
+
+start_time = datetime.now()
+
+class RepeatTimer(Timer):
+    def run(self):
+        while not self.finished.wait(self.interval):
+            self.function(*self.args, **self.kwargs)
+            
+timer = RepeatTimer(1, getExeSec,args=[start_time])
+timer.start()
+
+record_cnt = 0
+RecordStart(str(today) + "_" + str(record_cnt)+".wav",RECORD_SEC)
+while(recorded_secs < TOTAL_RECORD_SEC):
+  record_interval = RECORD_SEC - OVER_LAP_SEC
+  print("recording")
+  if(recorded_secs%10 == 0):
+    print("next record Start")
+    record_cnt = record_cnt+1
+    file_name = str(today) + "_" + str(record_cnt)+".wav"
+    RecordStart(file_name,RECORD_SEC)
+    #timer(RecordStart(file_name,RECORD_SEC))
+    time.sleep(3)
+
+timer.cancel() 
+'''
 
 
 #import toGoogleDrive
