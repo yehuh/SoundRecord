@@ -58,15 +58,14 @@ from threading import Timer
 import time
 OVER_LAP_SEC = 5
 TOTAL_RECORD_SEC = 80
-RECORD_SEC = 30
+RECORD_SEC = 20
 today = datetime.today().strftime('%Y%m%d')
 #file_name = str(today) + ".wav"
 file_name = "recordtest"
-RecordStart(file_name, RECORD_SEC)
 record_cnt = int(TOTAL_RECORD_SEC / RECORD_SEC)
-#for i in range (record_cnt):
-#  file_name_buff = file_name + "-" + str(i) +".wav"
-#  RecordStart(file_name_buff, RECORD_SEC)
+for i in range (record_cnt):
+  file_name_buff = file_name + "-" + str(i) +".wav"
+  RecordStart(file_name_buff, RECORD_SEC)
 
 
 
