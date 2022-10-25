@@ -27,26 +27,26 @@ def RecordStart(filename, record_secs = 1200):
 
   audio = pyaudio.PyAudio() # create pyaudio instantiation
 
-# create pyaudio stream
+  # create pyaudio stream
   stream = audio.open(format = form_1,rate = samp_rate,channels = chans, \
                     input_device_index = dev_index,input = True, \
                     frames_per_buffer=chunk)
   print("recording")
   frames = []
 
-# loop through stream and append audio chunks to frame array
+  # loop through stream and append audio chunks to frame array
   for ii in range(0,int((samp_rate/chunk)*record_secs)):
     data = stream.read(chunk)
     frames.append(data)
 
   print("finished recording")
 
-# stop the stream, close it, and terminate the pyaudio instantiation
+  # stop the stream, close it, and terminate the pyaudio instantiation
   stream.stop_stream()
   stream.close()
   audio.terminate()
 
-# save the audio frames as .wav file
+  # save the audio frames as .wav file
   wavefile = wave.open(wav_output_filename,'wb')
   wavefile.setnchannels(chans)
   wavefile.setsampwidth(audio.get_sample_size(form_1))
@@ -62,6 +62,8 @@ TOTAL_RECORD_SEC = 1200
 RECORD_SEC = 50
 today = datetime.today().strftime('%Y%m%d')
 file_name = str(today) + ".wav"
+#file_name = "noise_20_min.wav"
+#RecordStart(file_name, TOTAL_RECORD_SEC)
 
 
 record_cnt = int(TOTAL_RECORD_SEC / RECORD_SEC)
